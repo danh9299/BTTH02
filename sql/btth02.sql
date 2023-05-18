@@ -72,6 +72,7 @@ INSERT INTO `classes` (`id_class`, `class code`, `class name`, `id_instructor`) 
 
 CREATE TABLE `instructors` (
   `id_instructor` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `contact info` varchar(150) NOT NULL
@@ -81,8 +82,8 @@ CREATE TABLE `instructors` (
 -- Đang đổ dữ liệu cho bảng `instructors`
 --
 
-INSERT INTO `instructors` (`id_instructor`, `name`, `email`, `contact info`) VALUES
-(1, 'Kiều Tuấn Dũng', 'kieutuandung@gmail.com', 'Thuy Loi');
+INSERT INTO `instructors` (`id_instructor`, `id_user`, `name`, `email`, `contact info`) VALUES
+(1, 6, 'Kiều Tuấn Dũng', 'kieutuandung@gmail.com', 'Thuy Loi');
 
 -- --------------------------------------------------------
 
@@ -103,11 +104,11 @@ CREATE TABLE `students` (
 -- Đang đổ dữ liệu cho bảng `students`
 --
 
-INSERT INTO `students` (`id_sv`,`id_user`, `name`, `birth`, `email`, `contact info`) VALUES
-(1,2, 'Bùi Tiến Đạt', '2023-05-10', 'buitiendat@gmail.com', 'Thuy Loi 2'),
-(2,3, 'Bùi Mạnh Cường', '2023-05-16', 'buimanhcuong@gmail.com', 'Thuy Loi'),
-(3,4, 'Nguyễn Duy Anh', '2023-05-03', 'nguyenduyanh@gmail.com', 'Thuy Loi 1'),
-(4,5, 'Nguyễn Như Vinh', '2023-05-04', 'nguyennhuvinh@gmail.com', 'Thuy Loi');
+INSERT INTO `students` (`id_sv`, `id_user`, `name`, `birth`, `email`, `contact info`) VALUES
+(1, 2, 'Bùi Tiến Đạt', '2023-05-10', 'buitiendat@gmail.com', 'Thuy Loi 2'),
+(2, 3, 'Bùi Mạnh Cường', '2023-05-16', 'buimanhcuong@gmail.com', 'Thuy Loi'),
+(3, 4, 'Nguyễn Duy Anh', '2023-05-03', 'nguyenduyanh@gmail.com', 'Thuy Loi 1'),
+(4, 5, 'Nguyễn Như Vinh', '2023-05-04', 'nguyennhuvinh@gmail.com', 'Thuy Loi');
 
 -- --------------------------------------------------------
 
@@ -180,6 +181,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `students`
   ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
+
+--
+-- Các ràng buộc cho bảng `instructors`
+--
+ALTER TABLE `instructors`
+  ADD CONSTRAINT `instructors_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
 
 --
 -- Các ràng buộc cho bảng `attendance`
