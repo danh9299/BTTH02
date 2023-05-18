@@ -10,6 +10,7 @@ try
    
     $conn = new PDO("mysql:host=localhost:3307;dbname=bth02", 'root', '');
     $sql = "select * from users where username = :username and password = :password";
+    
     $stmt = $conn -> prepare($sql);
     $stmt -> bindValue(':username',$userName,PDO::PARAM_STR);
     $stmt -> bindValue(':password',$userPass,PDO::PARAM_STR);
