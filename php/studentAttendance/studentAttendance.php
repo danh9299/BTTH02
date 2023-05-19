@@ -16,6 +16,8 @@
     } catch (PDOException $pe) {
         die("Could not connect to the database $dbname :" . $pe->getMessage());
     }
+
+    
     //query
     //$sql = "SELECT * FROM users WHERE username == $username AND password == $password"
 

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 18, 2023 lúc 07:12 AM
--- Phiên bản máy phục vụ: 10.4.21-MariaDB
--- Phiên bản PHP: 8.0.11
+-- Host: 127.0.0.1
+-- Generation Time: May 19, 2023 at 10:22 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `btth02`
+-- Database: `btth02`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `attendance`
+-- Table structure for table `attendance`
 --
 
 CREATE TABLE `attendance` (
@@ -33,19 +33,19 @@ CREATE TABLE `attendance` (
   `id_class` int(11) NOT NULL,
   `id_sv` int(11) NOT NULL,
   `status` enum('attend','absent','','') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `attendance`
+-- Dumping data for table `attendance`
 --
 
 INSERT INTO `attendance` (`id_attendance`, `day`, `id_class`, `id_sv`, `status`) VALUES
-(1, '0000-00-00', 1, 1, 'attend');
+(1, '2023-05-17', 1, 1, 'attend');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `classes`
+-- Table structure for table `classes`
 --
 
 CREATE TABLE `classes` (
@@ -53,21 +53,21 @@ CREATE TABLE `classes` (
   `class code` int(11) NOT NULL,
   `class name` varchar(100) NOT NULL,
   `id_instructor` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `classes`
+-- Dumping data for table `classes`
 --
 
 INSERT INTO `classes` (`id_class`, `class code`, `class name`, `id_instructor`) VALUES
 (1, 0, 'Công nghệ Web', 1),
-(2, 0, '', 1),
-(3, 0, '', 1);
+(2, 0, 'Nền tảng phát triển Web', 1),
+(3, 0, 'Lí thuyết tính toán', 2);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `instructors`
+-- Table structure for table `instructors`
 --
 
 CREATE TABLE `instructors` (
@@ -76,19 +76,20 @@ CREATE TABLE `instructors` (
   `name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `contact info` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `instructors`
+-- Dumping data for table `instructors`
 --
 
 INSERT INTO `instructors` (`id_instructor`, `id_user`, `name`, `email`, `contact info`) VALUES
-(1, 6, 'Kiều Tuấn Dũng', 'kieutuandung@gmail.com', 'Thuy Loi');
+(1, 6, 'Kiều Tuấn Dũng', 'kieutuandung@gmail.com', 'Thuy Loi'),
+(2, 7, 'Ngô Trường Giang', 'truonggiang@gmail.com', 'Thuy Loi');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `students`
+-- Table structure for table `students`
 --
 
 CREATE TABLE `students` (
@@ -98,10 +99,10 @@ CREATE TABLE `students` (
   `birth` date NOT NULL,
   `email` varchar(50) NOT NULL,
   `contact info` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `students`
+-- Dumping data for table `students`
 --
 
 INSERT INTO `students` (`id_sv`, `id_user`, `name`, `birth`, `email`, `contact info`) VALUES
@@ -113,34 +114,34 @@ INSERT INTO `students` (`id_sv`, `id_user`, `name`, `birth`, `email`, `contact i
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `id_user` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `role` enum('Admin','Instructor','Student','') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `role` enum('0','1','') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id_user`, `username`, `password`, `role`) VALUES
-(1, 'admin', '123', 'Admin'),
-(2, 'buitiendat', '123', 'Student'),
-(3, 'buimanhcuong', '123', 'Student'),
-(4, 'nguyenduyanh', '123', 'Student'),
-(5, 'nguyennhuvinh', '123', 'Student'),
-(6, 'kieutuandung', '123', 'Instructor');
+(2, 'buitiendat', '123', '1'),
+(3, 'buimanhcuong', '123', '1'),
+(4, 'nguyenduyanh', '123', '1'),
+(5, 'nguyennhuvinh', '123', '1'),
+(6, 'kieutuandung', '123', '0'),
+(7, 'truonggiang', '123', '0');
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `attendance`
+-- Indexes for table `attendance`
 --
 ALTER TABLE `attendance`
   ADD PRIMARY KEY (`id_attendance`),
@@ -148,58 +149,60 @@ ALTER TABLE `attendance`
   ADD KEY `id_sv` (`id_sv`);
 
 --
--- Chỉ mục cho bảng `classes`
+-- Indexes for table `classes`
 --
 ALTER TABLE `classes`
   ADD PRIMARY KEY (`id_class`),
   ADD KEY `id_instructor` (`id_instructor`);
 
 --
--- Chỉ mục cho bảng `instructors`
+-- Indexes for table `instructors`
 --
 ALTER TABLE `instructors`
-  ADD PRIMARY KEY (`id_instructor`);
+  ADD PRIMARY KEY (`id_instructor`),
+  ADD KEY `instructors_ibfk_1` (`id_user`);
 
 --
--- Chỉ mục cho bảng `students`
+-- Indexes for table `students`
 --
 ALTER TABLE `students`
-  ADD PRIMARY KEY (`id_sv`);
+  ADD PRIMARY KEY (`id_sv`),
+  ADD KEY `students_ibfk_1` (`id_user`);
 
 --
--- Chỉ mục cho bảng `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `students`
---
-ALTER TABLE `students`
-  ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
-
---
--- Các ràng buộc cho bảng `instructors`
---
-ALTER TABLE `instructors`
-  ADD CONSTRAINT `instructors_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
-
---
--- Các ràng buộc cho bảng `attendance`
+-- Constraints for table `attendance`
 --
 ALTER TABLE `attendance`
   ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`id_class`) REFERENCES `classes` (`id_class`),
   ADD CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`id_sv`) REFERENCES `students` (`id_sv`);
 
 --
--- Các ràng buộc cho bảng `classes`
+-- Constraints for table `classes`
 --
 ALTER TABLE `classes`
   ADD CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`id_instructor`) REFERENCES `instructors` (`id_instructor`);
+
+--
+-- Constraints for table `instructors`
+--
+ALTER TABLE `instructors`
+  ADD CONSTRAINT `instructors_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
+
+--
+-- Constraints for table `students`
+--
+ALTER TABLE `students`
+  ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
