@@ -1,0 +1,3 @@
+<?php 
+    echo'Instructors Page';
+?>

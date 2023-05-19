@@ -8,7 +8,7 @@ try
     //  echo "userName: $userName";
     //  echo " \n userPass: $userPass";
    
-    $conn = new PDO("mysql:host=localhost;dbname=btth02", 'root', '');
+    $conn = new PDO("mysql:host=localhost:3307;dbname=bth02", 'root', '');
     $sql = "select * from users where username = :username and password = :password";
     
     $stmt = $conn -> prepare($sql);
@@ -16,9 +16,13 @@ try
     $stmt -> bindValue(':password',$userPass,PDO::PARAM_STR);
     $stmt ->execute();
     $member = $stmt ->fetchAll();
-    // print_r($member);
-    if($stmt -> rowCount()==1){
-        header('Location: home.php');
+    //print_r(end($member[0])) ;
+    if($stmt -> rowCount()==1 and end($member[0])==1){
+        header('Location: students.php');
+    }
+    else if($stmt -> rowCount()==1 and end($member[0])==0)
+    {
+      header('Location: instructors.php'); 
     }
     else {
        $alert = 'Vui lòng nhập đúng tài khoản hoặc mật khẩu!';
