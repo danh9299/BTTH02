@@ -59,7 +59,7 @@ CREATE TABLE `classes` (
 -- Dumping data for table `classes`
 --
 
-INSERT INTO `classes` (`id_class`, `class code`, `class name`, `id_instructor`) VALUES
+INSERT INTO `classes` (`id_class`, `class code`, `classname`, `id_instructor`) VALUES
 (1, 0, 'Công nghệ Web', 1),
 (2, 0, 'Nền tảng phát triển Web', 1),
 (3, 0, 'Lí thuyết tính toán', 2);
