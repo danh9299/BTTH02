@@ -51,7 +51,7 @@ INSERT INTO `attendance` (`id_attendance`, `day`, `id_class`, `id_sv`, `status`)
 CREATE TABLE `classes` (
   `id_class` int(11) NOT NULL,
   `class code` int(11) NOT NULL,
-  `class name` varchar(100) NOT NULL,
+  `classname` varchar(100) NOT NULL,
   `id_instructor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
