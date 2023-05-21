@@ -1,4 +1,5 @@
 <?php 
+session_start();
 $alert='';
  if($_SERVER['REQUEST_METHOD']=='POST'){
 try
@@ -7,8 +8,13 @@ try
      $userPass = $_POST['password'];
     //  echo "userName: $userName";
     //  echo " \n userPass: $userPass";
+
+    
+    $_SESSION['username'] = $userName;
+    $_SESSION['password'] = $userPass;
+
    
-    $conn = new PDO("mysql:host=localhost:3307;dbname=bth02", 'root', '');
+    $conn = new PDO("mysql:host=localhost;dbname=btth02", 'root', '');
     $sql = "select * from users where username = :username and password = :password";
     
     $stmt = $conn -> prepare($sql);
@@ -18,7 +24,7 @@ try
     $member = $stmt ->fetchAll();
     //print_r(end($member[0])) ;
     if($stmt -> rowCount()==1 and end($member[0])==1){
-        header('Location: students.php');
+        header('Location: ../studentAttendance/studentAttendance.php');
     }
     else if($stmt -> rowCount()==1 and end($member[0])==0)
     {

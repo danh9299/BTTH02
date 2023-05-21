@@ -6,7 +6,11 @@
     //     
     // 
     //     echo $password;}
-
+    session_start();
+   
+    $userName = $_SESSION['username']; 
+    $userPass = $_SESSION['password'];
+    echo $userName."+".$userPass;
 
 
     // Connect to database
@@ -17,10 +21,15 @@
         die("Could not connect to the database $dbname :" . $pe->getMessage());
     }
 
-    $stmt_nameSV = $conn->prepare('SELECT id_sv,name from students where id_sv = 4');
+    $stmt_nameSV = $conn->prepare('SELECT id_sv,name from students where id_user in (SELECT id_user from users where username = :username)');
+    $stmt_nameSV -> bindValue(':username',$userName,PDO::PARAM_STR);
     $stmt_nameSV->execute();
     // Lấy danh sách kết quả
     $names = $stmt_nameSV->fetchAll();
+
+
+   // $sql_classes =  $conn->prepare('SELECT ')
+   
     //query
     //$sql = "SELECT * FROM users WHERE username == $username AND password == $password"
 
