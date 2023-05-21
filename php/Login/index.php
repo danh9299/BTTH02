@@ -28,7 +28,7 @@ try
     }
     else if($stmt -> rowCount()==1 and end($member[0])==0)
     {
-      header('Location: instructors.php'); 
+      header('Location: ../AttendanceTeacher/AttendanceTeacher.php'); 
     }
     else {
        $alert = 'Vui lòng nhập đúng tài khoản hoặc mật khẩu!';

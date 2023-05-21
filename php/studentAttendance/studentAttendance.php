@@ -1,4 +1,5 @@
 <?php
+
     // //$username = $_POST['username'] ?? '';
     // //$password = $_POST['password'] ?? '';
     // if(isset($_POST['username'])&&isset($_POST['password'])){
@@ -10,13 +11,14 @@
    
     $userName = $_SESSION['username']; 
     $userPass = $_SESSION['password'];
-    echo $userName."+".$userPass;
+    
+    //echo $userName."+".$userPass;
 
+    
 
     // Connect to database
     try {
         $conn = new PDO("mysql:host=localhost;dbname=btth02", 'root', '');
-        echo "Connected to database: BTTH02 successfully.";
     } catch (PDOException $pe) {
         die("Could not connect to the database $dbname :" . $pe->getMessage());
     }
@@ -28,15 +30,48 @@
     $names = $stmt_nameSV->fetchAll();
 
 
-   // $sql_classes =  $conn->prepare('SELECT ')
-   
+   $sql_classes =  $conn->prepare('SELECT classname from classes');
+   $sql_classes->execute();
+   $classes = $sql_classes->fetchAll();
     //query
     //$sql = "SELECT * FROM users WHERE username == $username AND password == $password"
 
     //query classes
     //$sql
+    //Notification điểm danh thành công
+    $Noti ="";
+// Add status "attend" to database
+if($_SERVER['REQUEST_METHOD']=='POST' ){
+    $id_sv = $_POST['id_sv'];
+    $classname = $_POST['classname'];
+   
+    //Get id class
+    $sql = "select id_class from classes where classname = :classname";
+    $stmtIDClass = $conn -> prepare($sql);
+    $stmtIDClass -> bindValue(':classname',$classname,PDO::PARAM_STR);
+    $stmtIDClass ->execute();
+    $IDclass = $stmtIDClass ->fetch();
 
+    $sql = "select id_attendance from attendance ORDER BY id_attendance DESC LIMIT 1";
+    $stmtIDatt = $conn -> prepare($sql);
+    $stmtIDatt ->execute();
+    $IDatt = $stmtIDatt ->fetch();
     
+
+    $currentDateTime = date('Y-m-d');
+    // Add status "attend" to db
+    $insert_sql = "insert into attendance (id_attendance, day,id_class,id_sv,status) values(?,?,?,?,?)";
+    $insert_attendance = $conn -> prepare($insert_sql);
+    $insert_attendance -> bindValue(1,$IDatt[0]+1,PDO::PARAM_STR);
+    $insert_attendance -> bindValue(2,$currentDateTime,PDO::PARAM_STR);
+    $insert_attendance-> bindValue(3,$IDclass[0],PDO::PARAM_STR);
+    $insert_attendance -> bindValue(4,$id_sv,PDO::PARAM_STR);
+    $insert_attendance -> bindValue(5,'attend',PDO::PARAM_STR);
+    if($insert_attendance ->execute() === TRUE){
+        $Noti = "Điểm danh thành công";
+    }
+        }
+   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +90,8 @@
 
     <!--Attendance-->
     <div class="container">
-    <form action="" method="GET">
+  
+    <form action="./studentAttendance.php" method="POST">
     <div class="mt-3 form-group">
         <label>Mã Sinh Viên</label>
             <input class="form-control" name="id_sv" value="<?= $names[0][0]; ?>" type="hidden" >
@@ -70,13 +106,21 @@
 
     <div class="mt-3 form-group">
         <label for="exampleFormControlSelect1">Chọn lớp điểm danh</label>
+  
             <select name="classname" class="form-control" id="exampleFormControlSelect1">
-                <option>Công Nghệ Web</option>
-                <option>Nền Tảng Phát Triển Web</option>
-                <option>Lí Thuyết Tính Toán</option>
+           
+           <?php
+        foreach ($classes as $class){
+?>
+                
+                <option><?=$class[0]?></option>
+                <?php }?>
             </select>
+        
     </div>
+   
     <button type="submit" class="mt-3 btn btn-primary">Submit</button>
+    <p class= "text-danger"><?=$Noti?></p>
     </form>
     </div>
 
